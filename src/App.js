@@ -1,24 +1,41 @@
-import logo from './logo.svg';
+import DeleteInfo from './Img/delete.svg';
 import './App.css';
+import React, { useState } from 'react';
+import * as S from './Styled/style.js';
 
 function App() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    item('');
+    lista('');
+  };
+  const [item, setItem] = useState('');
+  const [lista, setLista] = useState([]);
+  const tarefa = { tarefa: item, id: Date.now() };
+  const Add = () => {
+    if (item !== '') {
+      setLista(lista.concat(tarefa));
+    }
+    setItem('');
+  };
+  const Remove = (id) => {
+    setLista(lista.filter((item) => item.id !== id));
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <S.Container>
+      <S.ContainerInput onSubmit={handleSubmit}>
+        <input value={item} onChange={(e) => setItem(e.target.value)} />
+        <S.Submit onClick={() => Add()}>Add</S.Submit>
+      </S.ContainerInput>
+      {lista.map((item, index) => (
+        <S.ContainerOptions key={index}>
+          <li>{item.tarefa}</li>
+          <S.DeleteButtom onClick={() => Remove(item.id)}>
+            <img src={DeleteInfo} alt="delete" />
+          </S.DeleteButtom>
+        </S.ContainerOptions>
+      ))}
+    </S.Container>
   );
 }
 
