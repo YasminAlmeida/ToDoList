@@ -1,41 +1,16 @@
-import DeleteInfo from './Img/delete.svg';
 import './App.css';
-import React, { useState } from 'react';
-import * as S from './Styled/style.js';
+// import * as S from './Styled/styleHeader.js';
+import GlobalStyle from './Styled/global.js';
+import Header from './Component/Header.js';
+import Main from './Component/Main.js';
 
 function App() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    item('');
-    lista('');
-  };
-  const [item, setItem] = useState('');
-  const [lista, setLista] = useState([]);
-  const tarefa = { tarefa: item, id: Date.now() };
-  const Add = () => {
-    if (item !== '') {
-      setLista(lista.concat(tarefa));
-    }
-    setItem('');
-  };
-  const Remove = (id) => {
-    setLista(lista.filter((item) => item.id !== id));
-  };
   return (
-    <S.Container>
-      <S.ContainerInput onSubmit={handleSubmit}>
-        <input value={item} onChange={(e) => setItem(e.target.value)} />
-        <S.Submit onClick={() => Add()}>Add</S.Submit>
-      </S.ContainerInput>
-      {lista.map((item, index) => (
-        <S.ContainerOptions key={index}>
-          <li>{item.tarefa}</li>
-          <S.DeleteButtom onClick={() => Remove(item.id)}>
-            <img src={DeleteInfo} alt="delete" />
-          </S.DeleteButtom>
-        </S.ContainerOptions>
-      ))}
-    </S.Container>
+    <section>
+      <Header />
+      <Main />
+      <GlobalStyle />
+    </section>
   );
 }
 
